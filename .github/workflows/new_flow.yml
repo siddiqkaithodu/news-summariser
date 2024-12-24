@@ -24,4 +24,4 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ (github.repository) }}:${{ github.sha }}
-          github_token: ${{ secrets.SECRET_CODE }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
