@@ -24,4 +24,4 @@ jobs:
           context: .
           push: true
           tags: ${{ github.repository_owner }}/${{ github.repository_name }}:${{ github.sha }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ github.token }}
