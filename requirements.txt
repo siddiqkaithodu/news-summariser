@@ -5,4 +5,3 @@ openai==0.28
 fastapi-cache2
 redis
 google-generativeai
-Committer: Abubakkar Siddeeq <abubakkar.siddeeq@equifax.com
