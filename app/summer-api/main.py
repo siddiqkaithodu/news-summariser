@@ -9,28 +9,16 @@ from .summariser import summarise_news_stories
 app = FastAPI()
 
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
 @app.get("/")
 def index():
     return {"msg": "Welcome to the News App"}
-
 
 @app.get("/news")
 def news():
     summary = ""
     images = []
-    print("here")
     try:
-        # print("here")
         stories = get_top_stories()
-        print("recievd")
         for story in stories:
             if story["multimedia"]:
                 tmp = story["multimedia"]
