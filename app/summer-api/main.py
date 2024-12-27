@@ -1,4 +1,5 @@
 import os
+import traceback
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -45,10 +46,11 @@ def news():
             filter(lambda image: image["format"] == "Large Thumbnail", images)
         )
     except Exception as e:
-        import traceback
-
-        traceback.print_exc()
-        raise HTTPException(
-            status_code=500, detail="Apologies, something bad happened :("
-        ) from e
+        error_type = type(e).__name__
+        error_message = (
+            f"An error occurred while processing the news feed: {error_type}"
+        )
+        # Log the full error for internal debugging (should go to proper logging system)
+        print(f"Error in /news endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=error_message) from e
     return JSONResponse({"summary": summary, "images": images})
