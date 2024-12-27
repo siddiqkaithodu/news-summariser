@@ -3,5 +3,3 @@ fastapi-cache2
 redis
 google-generativeai
 jinja2
-fastapi
-uvicorn
