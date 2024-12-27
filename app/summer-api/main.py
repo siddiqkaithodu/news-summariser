@@ -11,8 +11,8 @@ from .nytimes_client import get_top_stories
 from .story_formatter import format_stories_to_string
 from .summariser import summarise_news_stories
 
-path = os.getenv("PATH", str(Path(__file__).parent / "summer-ui"))
-origin = os.getenv("ORIGIN", "localhost")
+path = os.getenv("BASE_PATH", str(Path(__file__).parent / "summer-ui"))
+origin = os.getenv("ORIGIN_URL", "localhost")
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
