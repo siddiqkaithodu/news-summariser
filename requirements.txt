@@ -1,8 +1,7 @@
-fastapi
-uvicorn
 pynytimes
-openai==0.28
 fastapi-cache2
 redis
 google-generativeai
 jinja2
+fastapi
+uvicorn
