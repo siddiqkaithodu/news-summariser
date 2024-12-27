@@ -1,5 +1,5 @@
 window.onload = function () {
-    fetch("https://summer-api.fly.dev/news/")
+    fetch(window.location.origin + "/news")
       .then((response) => response.json())
       .then((data) => {
         document.getElementById("loader").style.display = "none";

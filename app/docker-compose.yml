@@ -1,7 +1,0 @@
-services:
-  frontend:
-    build: summer-ui/Dockerfile
-    ports:
-    - 9000:8043
-  backend:
-    build: /summer-api/Dockerfile
