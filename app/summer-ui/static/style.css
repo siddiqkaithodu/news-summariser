@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+}
+
+.container {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  padding-bottom: 4rem;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  color: #212121;
+  text-align: center;
+}
+
+p {
+  font-size: 1em;
+  text-align: justify;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  /* Tablets */
+  .container {
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 1.75em;
+  }
+
+  p {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Phones */
+  .container {
+    width: 95%;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  p {
+    font-size: 0.85em;
+  }
+}
+
+.img-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.photo {
+  position: relative;
+  margin: -15px; /* negative margin makes the images overlap */
+  transform: rotate(-10deg); /* starting angle */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s;
+  z-index: 1; /* ensure that images can stack on top of each other */
+}
+
+.photo:hover {
+  transform: rotate(0deg); /* reset to straight when hovered */
+}
+
+.photo img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.date {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#loader {
+  padding-top: 20%;
+  text-align: center;
+}
+
+.lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+.lds-circle > div {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  background: #fff;
+  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+@keyframes lds-circle {
+  0%,
+  100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
+
+.hidden {
+  display: none;
+}

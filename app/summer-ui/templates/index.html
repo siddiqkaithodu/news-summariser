@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Today's News</title>
+    <link href="static/style.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="static/styles.css"> -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+</head>
+<body>
+    <main>
+        <div id="loader">
+            <h1>This should be quick, but ever so often it takes a long time...</h1>
+            <div class="lds-circle"><div></div></div>
+        </div>
+        <div id="news-container" class="container hidden">
+            <h1>Today's News</h1>
+            <div class="date" id="date"></div>
+            <p id="summary">
+            </p>
+        </div>
+        <div id="images" class="img-container">
+        </div>
+    </main>
+    <script src="static/script.js"></script>
+</body>
+</html>
