@@ -1,5 +1,4 @@
 pynytimes
-fastapi-cache2
 redis
 google-generativeai
 jinja2
