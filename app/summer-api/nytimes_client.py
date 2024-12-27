@@ -1,5 +1,4 @@
 import os
-import datetime
 from pynytimes import NYTAPI
 
 API_KEY = os.getenv("NYTIMES_API_KEY", "")

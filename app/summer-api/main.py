@@ -1,5 +1,4 @@
 import os
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -11,15 +10,17 @@ from .nytimes_client import get_top_stories
 from .story_formatter import format_stories_to_string
 from .summariser import summarise_news_stories
 
-path = Path(__file__).parent.parent.parent / "summer-ui"
+path = os.getenv("PATH", str(Path(__file__).parent / "summer-ui"))
+origin = os.getenv("ORIGIN", "localhost")
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origin],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET"],
     allow_headers=["*"],
 )
+
 app.mount("/static", StaticFiles(directory="app/summer-ui/static/"), name="static")
 templates = Jinja2Templates(directory="app/summer-ui/templates")
 
@@ -49,5 +50,5 @@ def news():
         traceback.print_exc()
         raise HTTPException(
             status_code=500, detail="Apologies, something bad happened :("
-        )
+        ) from e
     return JSONResponse({"summary": summary, "images": images})
