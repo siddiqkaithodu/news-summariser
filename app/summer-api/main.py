@@ -46,7 +46,7 @@ def news():
     return get_cached(today) or refresh_news_summary(today)
 
 
-def refresh_news_summary():
+def refresh_news_summary(today):
     logger.info("Refreshing News Summary")
     summary = ""
     images = []
@@ -69,7 +69,7 @@ def refresh_news_summary():
         print(f"Error in /news endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=error_message) from e
     json_response = {"summary": summary, "images": images}
-    cache_response(json_response,today)
+    cache_response(json_response, today)
     return JSONResponse(json_response)
 
 
