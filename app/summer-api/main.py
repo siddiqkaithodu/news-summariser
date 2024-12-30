@@ -42,10 +42,11 @@ def index(request: Request):
 
 @app.get("/news")
 def news():
-    return get_cached() or refresh_news_summary()
+    today = f"{datetime.now():%d%m%y}"
+    return get_cached(today) or refresh_news_summary(today)
 
 
-def refresh_news_summary():
+def refresh_news_summary(today):
     logger.info("Refreshing News Summary")
     summary = ""
     images = []
@@ -68,17 +69,16 @@ def refresh_news_summary():
         print(f"Error in /news endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=error_message) from e
     json_response = {"summary": summary, "images": images}
-    cache_response(json_response)
-    return JSONResponse()
+    cache_response(json_response, today)
+    return JSONResponse(json_response)
 
 
-def get_cached():
-    today = f"{datetime.now():%d%m%y}"
+def get_cached(today):
     if today == redis.get("today_date"):
         logger.info(f"Returning Cached Version : {today}")
         return json.loads(redis.get("today_news_summary"))
 
 
-def cache_response(json_response):
+def cache_response(json_response,today):
     redis.set("today_news_summary", json.dumps(json_response))
     redis.set("today_date", today)
