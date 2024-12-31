@@ -1,7 +1,10 @@
 import os
+from contextlib import asynccontextmanager
 import traceback
+import json
 from redis import StrictRedis, Redis
 from datetime import datetime
+from time import perf_counter
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -14,14 +17,24 @@ from .nytimes_client import get_top_stories
 from .story_formatter import format_stories_to_string
 from .summariser import summarise_news_stories
 
-BASE_PATH = os.getenv("BASE_PATH", str(Path(__file__).parent / "summer-ui"))
+BASE_PATH = os.getenv("BASE_PATH", str(Path(__file__).parent.parent / "summer-ui"))
 ORIGIN_URL = os.getenv("ORIGIN_URL", "localhost")
 REDIS_URL = os.getenv("REDIS_URL", "localhost")
 DB = os.getenv("DB", 0)
 
 logger = getLogger(__name__)
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    starting_time = perf_counter()
+    logger.warning("Initializing Everything ...")
+    yield
+    logger.warning("Exiting ...")
+    logger.warning("Ran for {perf_counter() - starting_time}")
+
+
+app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[ORIGIN_URL],
@@ -47,7 +60,7 @@ def news():
 
 
 def refresh_news_summary(today):
-    logger.info("Refreshing News Summary")
+    logger.warning("Refreshing News Summary")
     summary = ""
     images = []
     try:
@@ -65,7 +78,6 @@ def refresh_news_summary(today):
         error_message = (
             f"An error occurred while processing the news feed: {error_type}"
         )
-        # Log the full error for internal debugging (should go to proper logging system)
         print(f"Error in /news endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=error_message) from e
     json_response = {"summary": summary, "images": images}
@@ -73,12 +85,13 @@ def refresh_news_summary(today):
     return JSONResponse(json_response)
 
 
-def get_cached(today):
+def get_cached(today):
+
     if today == redis.get("today_date"):
-        logger.info(f"Returning Cached Version : {today}")
+        logger.warning(f"Returning Cached Version : {today}")
         return json.loads(redis.get("today_news_summary"))
 
 
-def cache_response(json_response,today):
+def cache_response(json_response, today):
     redis.set("today_news_summary", json.dumps(json_response))
     redis.set("today_date", today)
