@@ -21,6 +21,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  HEROKU_API_KEY: 9bed2f69-3299-4051-b5a5-19b16d635bb5
 
 
 jobs:
@@ -99,7 +100,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Log in to Heroku
       run: |
-        heroku login
+        # heroku login
         heroku container:login
         heroku container:push web
         heroku container:release web
