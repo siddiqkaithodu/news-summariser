@@ -102,7 +102,7 @@ jobs:
       run: |
         # heroku login
         heroku container:login
-        heroku container:push web
+        heroku container:push web -a today-news-api
         heroku container:release web
       
 
