@@ -77,19 +77,15 @@ jobs:
       run: |
         docker build -t ${{ env.REPO_NAME }} .
 
-    - uses: actions/checkout@v4
     - name: Install Heroku
       run: |
         curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
-    - uses: actions/checkout@v4
     - name: Log in to Heroku
       run: |
-        # heroku login
         heroku container:login
         heroku stack:set container -a ${{ env.REPO_NAME }}
   
-    - uses: actions/checkout@v4
     - name: Deploy to Heroku
       run: |
         heroku container:push web -a ${{ env.REPO_NAME }}
