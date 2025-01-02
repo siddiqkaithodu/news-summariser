@@ -105,6 +105,7 @@ jobs:
         heroku stack:set container -a today-news-api
         heroku container:push web -a today-news-api
         heroku container:release web -a today-news-api
+        heroku logs --tail
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
