@@ -102,6 +102,7 @@ jobs:
       run: |
         # heroku login
         heroku container:login
+        heroku stack:set container
         heroku container:push web -a today-news-api
         heroku container:release web
       
